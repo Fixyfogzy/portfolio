@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
-import Portfolio from './pages/Portfolio'
+import Portfolio from './pages/portfolio'
 import About from './pages/About'
 import Contact from './pages/Contact'
 
