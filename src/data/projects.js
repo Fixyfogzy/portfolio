@@ -1,10 +1,18 @@
 import avance1 from '../assets/AVANCE/AVANCE.png'
 import avance2 from '../assets/AVANCE/avance1.png'
 import avance3 from '../assets/AVANCE/avance4.png'
+import avance4 from '../assets/AVANCE/avance5.png'
+import avance5 from '../assets/AVANCE/avance6.png'
 
 import solar1 from '../assets/solar yard/solar 2.png'
 import solar2 from '../assets/solar yard/solar2.png'
 import solar3 from '../assets/solar yard/solar6.png'
+import solar4 from '../assets/solar yard/solar8.png'
+import solar5 from '../assets/solar yard/solar9.png'
+
+import cidisite from '../assets/CIDI.png'
+
+import startedgesite from '../assets/startedge.png'
 
 
 
@@ -14,7 +22,7 @@ export const projects = [
     title: 'Avance Branding',
     category: 'Graphic Design',
     desc: 'Full brand identity for a Lagos restaurant including logo, menu design, and brand guidelines.',
-    images: [avance1, avance2, avance3],
+    images: [avance1, avance2, avance3, avance4, avance5],
     bg: 'bg-orange-100',
     accent: '#fb923c',
     tags: ['Branding', 'Logo', 'Social-media design'],
@@ -25,7 +33,7 @@ export const projects = [
     title: 'Fashion Flyer Campaign',
     category: 'Graphic Design',
     desc: 'A bold flyer series for a Lagos fashion brand promoting their seasonal collection.',
-    images: [solar1, solar2, solar3],
+    images: [solar1, solar2, solar3, solar4, solar5],
     bg: 'bg-pink-100',
     accent: '#f472b6',
     tags: ['Flyer', 'Campaign', 'social media'],
@@ -58,11 +66,11 @@ export const projects = [
     title: 'NGO Website',
     category: 'Web Development',
     desc: 'A clean, accessible website for a non-profit focused on education in underserved communities.',
-    images: [null],
+    images: [cidisite],
     bg: 'bg-blue-100',
     accent: '#60a5fa',
-    tags: ['React', 'Tailwind', 'Responsive'],
-    year: '2024',
+    tags: ['web dev', 'CSS', 'Responsive'],
+    year: '2025',
     liveUrl: 'https://your-ngo-site.com',
   },
   {
@@ -70,11 +78,11 @@ export const projects = [
     title: 'Portfolio Website',
     category: 'Web Development',
     desc: 'A personal portfolio for a photographer showcasing their work with a minimal, elegant layout.',
-    images: [null],
+    images: [startedgesite],
     bg: 'bg-teal-100',
     accent: '#2dd4bf',
-    tags: ['React', 'Framer Motion', 'Design'],
-    year: '2024',
+    tags: ['html', 'css', 'Design'],
+    year: '2025',
     liveUrl: 'https://your-portfolio-site.com',
   },
   {

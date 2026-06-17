@@ -19,7 +19,7 @@ export default function Navbar() {
 
         {/* Logo */}
        <Link to="/" className="flex items-center gap-2">
-  <img src={logo} alt="Mofi-Logo" className="w-10 h-10 rounded-full object-cover" />
+  <img src={logo} alt="Mofi-Logo" className="w-10 h-10 object-contain" />
 </Link>
 
         {/* Desktop Links */}

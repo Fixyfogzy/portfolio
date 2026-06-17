@@ -98,44 +98,24 @@ function Modal({ project, onClose }) {
         transition={{ type: 'spring', damping: 28, stiffness: 320 }}
         className="fixed z-50 inset-0 flex items-center justify-center px-4 py-8"
       >
-        <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-
+        <div
+          className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* ── Modal header image ── */}
           <div className={`${project.bg} relative`} style={{ height: '260px', overflow: 'hidden' }}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={imgIndex}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.25 }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                {project.images[imgIndex] ? (
-                  <div className="w-full h-full relative">
-                    <img
-                      src={project.images[imgIndex]}
-                      alt={`${project.title} ${imgIndex + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setLightboxOpen(true) }}
-                      className="absolute inset-0 w-full h-full cursor-zoom-in bg-transparent border-0"
-                      aria-label="View full image"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-16 h-16 rounded-full bg-white/60 flex items-center justify-center">
-                      <span className="text-2xl font-bold" style={{ color: project.accent }}>{project.title.charAt(0)}</span>
-                    </div>
-                    <p className="text-xs text-gray-400">
-                      {isWeb ? 'Website screenshot coming soon' : `Design ${imgIndex + 1} coming soon`}
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
 
+            {/* FIX #3: actually render the image so the header isn't empty */}
+            {project.images?.[imgIndex] && (
+              <img
+                src={project.images[imgIndex]}
+                alt={project.title}
+                onClick={() => setLightboxOpen(true)}
+                className="w-full h-full object-cover cursor-zoom-in"
+              />
+            )}
+
+            {/* Close button */}
             <button
               onClick={onClose}
               className="absolute top-4 right-4 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-colors text-sm z-10"
@@ -143,6 +123,7 @@ function Modal({ project, onClose }) {
               ✕
             </button>
 
+            {/* Prev / Next arrows (non-web projects only) */}
             {!isWeb && project.images.length > 1 && (
               <>
                 <button
@@ -173,6 +154,7 @@ function Modal({ project, onClose }) {
             )}
           </div>
 
+          {/* ── Modal body ── */}
           <div className="p-8">
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs text-gray-400 uppercase tracking-widest">{project.category}</p>
@@ -210,33 +192,101 @@ function Modal({ project, onClose }) {
         </div>
       </motion.div>
 
-      {/* Lightbox — portalled to document.body to escape overflow-hidden */}
-      {lightboxOpen && project.images[imgIndex] && createPortal(
+      {/* ── Lightbox — portalled to document.body to escape overflow:hidden ── */}
+      {/* FIX #1: removed duplicate inline lightbox; only the portal version remains */}
+      {/* FIX #2: AnimatePresence wraps the conditional content so exit animations fire */}
+      {createPortal(
         <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setLightboxOpen(false)}
-            style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', cursor: 'zoom-out' }}
-          >
-            <motion.img
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              src={project.images[imgIndex]}
-              alt={project.title}
-              onClick={(e) => e.stopPropagation()}
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px', cursor: 'default' }}
-            />
-            <button
-              onClick={(e) => { e.stopPropagation(); setLightboxOpen(false) }}
-              style={{ position: 'absolute', top: '20px', right: '20px', width: '40px', height: '40px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%', color: 'white', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          {lightboxOpen && project.images[imgIndex] && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setLightboxOpen(false)}
+              style={{
+                position: 'fixed',
+                inset: 0,
+                zIndex: 9999,
+                background: 'rgba(0,0,0,0.95)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '16px',
+                cursor: 'zoom-out',
+              }}
             >
-              ✕
-            </button>
-          </motion.div>
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={imgIndex}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.6}
+                  onDragEnd={(e, info) => {
+                    if (info.offset.x < -80 && imgIndex < project.images.length - 1) {
+                      setImgIndex(i => i + 1)
+                    } else if (info.offset.x > 80 && imgIndex > 0) {
+                      setImgIndex(i => i - 1)
+                    }
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  src={project.images[imgIndex]}
+                  alt={project.title}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                    borderRadius: '8px',
+                    cursor: 'grab',
+                  }}
+                />
+              </AnimatePresence>
+
+              {/* Close button */}
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightboxOpen(false) }}
+                style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '20px',
+                  width: '40px',
+                  height: '40px',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  color: 'white',
+                  fontSize: '18px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                ✕
+              </button>
+
+              {/* Dot indicators */}
+              {project.images.length > 1 && (
+                <div style={{ position: 'absolute', bottom: '24px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px' }}>
+                  {project.images.map((_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        height: '6px',
+                        borderRadius: '9999px',
+                        background: i === imgIndex ? 'white' : 'rgba(255,255,255,0.4)',
+                        width: i === imgIndex ? '24px' : '6px',
+                        transition: 'all 0.2s',
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
         </AnimatePresence>,
         document.body
       )}
