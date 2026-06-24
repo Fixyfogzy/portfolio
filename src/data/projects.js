@@ -1,8 +1,8 @@
-import avance1 from '../assets/AVANCE/AVANCE.png'
-import avance2 from '../assets/AVANCE/avance1.png'
-import avance3 from '../assets/AVANCE/avance4.png'
-import avance4 from '../assets/AVANCE/avance5.png'
-import avance5 from '../assets/AVANCE/avance6.png'
+import avance1 from '../assets/AVANCE/AVANCE.webp'
+import avance2 from '../assets/AVANCE/avance1.webp'
+import avance3 from '../assets/AVANCE/avance4.webp'
+import avance4 from '../assets/AVANCE/avance5.webp'
+import avance5 from '../assets/AVANCE/avance6.webp'
 
 import solar1 from '../assets/solar yard/solar 2.png'
 import solar2 from '../assets/solar yard/solar2.png'
