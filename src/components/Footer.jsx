@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const spring     = { type: 'spring', stiffness: 400, damping: 20 }
 const bouncySlow = { type: 'spring', stiffness: 200, damping: 14 }
@@ -18,6 +18,7 @@ const socials = [
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const location = useLocation()
 
   return (
     <footer className="bg-black text-white relative overflow-hidden">
@@ -60,9 +61,10 @@ export default function Footer() {
                 transition={{ ...bouncySlow, delay: 0.1 + i * 0.07 }}
               >
                 <Link
-                  to={link.to}
-                  className="group flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors duration-200 w-fit"
-                >
+  to={link.to}
+  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+  className="group flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors duration-200 w-fit"
+>
                   <motion.span
                     initial={{ width: 0 }}
                     whileHover={{ width: 16 }}
